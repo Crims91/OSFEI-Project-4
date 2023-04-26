@@ -13,11 +13,10 @@ const todoSlice = createSlice({
     addTodo(state, action) {
       state.todos.push(action.payload);
     },
+
     editTodo(state, action) {
-      const todo = state.todos.find(
-        (todo) => todo.id === action.payload.editId
-      );
-      todo.text = action.payload.inputEditValue;
+      const todo = state.todos.find((todo) => todo.id === action.payload.id);
+      todo.text = action.payload.text;
     },
     toggleTodo(state, action) {
       const todo = state.todos.find((todo) => todo.id === action.payload);

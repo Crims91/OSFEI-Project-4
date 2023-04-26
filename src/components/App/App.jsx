@@ -10,15 +10,14 @@ import { v4 } from "uuid";
 export const AppContext = createContext({});
 
 const App = () => {
-  const dispatch = useDispatch();
   const [inputValue, setInputValue] = useState("");
   const [inputEditValue, setInputEditValue] = useState("");
   const [editId, setEditId] = useState("");
-
   const [filter, setFilter] = useState("");
   const [open, setOpen] = useState(false);
 
   const todos = useSelector((state) => state.todos.todos);
+  const dispatch = useDispatch();
 
   /* 
   Add new todo item
@@ -34,7 +33,7 @@ const App = () => {
 
   const onEditTodo = () => {
     if (inputEditValue.length) {
-      editTodo(editId, inputEditValue);
+      dispatch(editTodo({ editId, inputEditValue }));
 
       setOpen(false);
       setInputEditValue("");
@@ -89,7 +88,7 @@ const App = () => {
             return true;
           })}
         />
-        <Modal onKeyPressEdit={(event) => onEnter(event, onEditTodo)} />
+        <Modal />
       </Wrapper>
     </AppContext.Provider>
   );

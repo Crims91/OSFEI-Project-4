@@ -8,14 +8,12 @@ import {
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 
-import { useContext } from "react";
-import { AppContext } from "../App/App";
 import { useDispatch } from "react-redux";
 import { removeTodo, toggleTodo } from "../../store/todoSlice";
+import { setCurrentModalId, toggleModalOpen } from "../../store/modalSlice";
 
 const TodoItem = ({ id, text, done }) => {
   const dispatch = useDispatch();
-  const { onToggleModal, idPassHandler } = useContext(AppContext);
   const isChecked = done || false;
 
   // Checks if the todo is done and changes the style
@@ -44,8 +42,8 @@ const TodoItem = ({ id, text, done }) => {
         <ListItemIcon>
           <EditIcon
             onClick={() => {
-              idPassHandler(id);
-              onToggleModal(true);
+              dispatch(setCurrentModalId(id));
+              dispatch(toggleModalOpen(true));
             }}
             label="end"
             sx={{ marginRight: "auto", marginLeft: "auto" }}

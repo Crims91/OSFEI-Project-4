@@ -1,10 +1,12 @@
+import { useState } from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import MainButton from "../Button/Button";
 import { StyledTextField } from "../TodoInput/TodoInput.styles";
-import { useContext } from "react";
-import { AppContext } from "../App/App";
+import { useDispatch, useSelector } from "react-redux";
+import { editTodo } from "../../store/todoSlice";
+import { toggleModalOpen } from "../../store/modalSlice";
 
 const style = {
   position: "absolute",
@@ -18,15 +20,33 @@ const style = {
   p: 4,
 };
 
-export default function BasicModal({ onKeyPressEdit }) {
-  const { open, onToggleModal, inputEditValue, onEditInputChange, onEditTodo } =
-    useContext(AppContext);
+export default function BasicModal() {
+  const [inputValue, setInputValue] = useState("");
+
+  const dispatch = useDispatch();
+  const isModalOpen = useSelector((state) => state.modal.isModalOpen);
+  const currentModalId = useSelector((state) => state.modal.currentModalId);
+
+  const onEditInputChange = (e) => {
+    setInputValue(e.target.value);
+  };
+
+  const handleEdit = () => {
+    dispatch(editTodo({ id: currentModalId, text: inputValue }));
+    setInputValue();
+    dispatch(toggleModalOpen(false));
+  };
+  const onKeyPressEdit = (event) => {
+    if (event.key === "Enter") {
+      handleEdit();
+    }
+  };
 
   return (
     <div>
       <Modal
-        open={open}
-        onClose={() => onToggleModal(false)}
+        open={isModalOpen}
+        onClose={() => dispatch(toggleModalOpen(false))}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
@@ -35,7 +55,7 @@ export default function BasicModal({ onKeyPressEdit }) {
             Edit todo item
           </Typography>
           <StyledTextField
-            value={inputEditValue}
+            value={inputValue}
             onChange={onEditInputChange}
             onKeyPress={onKeyPressEdit}
             fullWidth
@@ -46,7 +66,7 @@ export default function BasicModal({ onKeyPressEdit }) {
             title="Edit"
             width={180}
             bgColor={"#009688"}
-            callback={onEditTodo}
+            callback={handleEdit}
           />
         </Box>
       </Modal>
