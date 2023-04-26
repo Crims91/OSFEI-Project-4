@@ -12,7 +12,7 @@ export const AppContext = createContext({});
 const App = () => {
   const [inputValue, setInputValue] = useState("");
   const [inputEditValue, setInputEditValue] = useState("");
-  const [editId, setEditId] = useState("");
+  // const [editId, setEditId] = useState("");
   const [filter, setFilter] = useState("");
   const [open, setOpen] = useState(false);
 
@@ -31,28 +31,19 @@ const App = () => {
     }
   };
 
-  const onEditTodo = () => {
-    if (inputEditValue.length) {
-      dispatch(editTodo({ editId, inputEditValue }));
-
-      setOpen(false);
-      setInputEditValue("");
-    }
-  };
-
   // Filter todo items
   const onFilter = (filter) => setFilter(filter);
   // Change state of input value
   const onInputChange = (event) => setInputValue(event.target.value);
 
-  const onEditInputChange = (event) => setInputEditValue(event.target.value);
+  // const onEditInputChange = (event) => setInputEditValue(event.target.value);
 
   const onToggleModal = (show) => setOpen(show);
 
   const onEnter = (event, callback) =>
     event.key === "Enter" ? callback() : null;
 
-  const idPassHandler = (id) => setEditId(id);
+  // const idPassHandler = (id) => setEditId(id);
   return (
     // AppContext.Provider passes value to all children components
     <AppContext.Provider
@@ -61,12 +52,11 @@ const App = () => {
         onInputChange,
         addTodoItem,
         onFilter,
-        idPassHandler,
+        // idPassHandler,
         open,
         onToggleModal,
         inputEditValue,
-        onEditInputChange,
-        onEditTodo,
+        // onEditInputChange,
       }}
     >
       <Wrapper>
