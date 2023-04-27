@@ -2,7 +2,11 @@ import MainButton from "../Button/Button";
 import TodoItem from "../TodoItem/TodoItem";
 import { StyledWrapper, TodoListHeading, StyledList } from "./TodoList.styles";
 import { useDispatch, useSelector } from "react-redux";
-import { changeFilter } from "../../store/todoSlice";
+import {
+  changeFilter,
+  removeDoneTasks,
+  removeAllTasks,
+} from "../../store/todoSlice";
 
 const TodoList = () => {
   const dispatch = useDispatch();
@@ -17,7 +21,6 @@ const TodoList = () => {
 
   const handleChangeFilter = (filter) => {
     dispatch(changeFilter(filter));
-    console.log(filter, "test 1");
   };
   // Check if there are no todos to display delete buttons
   const displayDeleteButtons = !todos.length ? "none" : "";
@@ -28,35 +31,22 @@ const TodoList = () => {
 
       {/* Filter buttons */}
       <StyledWrapper>
-        {/* {[
-          { title: "All", filter: "all" },
-          { title: "Done", filter: "done" },
-          { title: "Todo", filter: "todo" },
-        ].map(({ title, filter }) => (
-          <MainButton
-            key={title}
-            title={title}
-            width={180}
-            bgColor={"#009688"}
-            onClick={handleChangeFilter(filter)}
-          />
-        ))} */}
         <MainButton
           title={"All"}
           width={180}
-          bgColor={"#009688"}
+          bgColor={"#597e90"}
           onClick={() => handleChangeFilter("all")}
         />
         <MainButton
           title={"Done"}
           width={180}
-          bgColor={"#009688"}
+          bgColor={"#4caf50"}
           onClick={() => handleChangeFilter("done")}
         />
         <MainButton
           title={"Todo"}
           width={180}
-          bgColor={"#009688"}
+          bgColor={"#4559ca"}
           onClick={() => handleChangeFilter("todo")}
         />
       </StyledWrapper>
@@ -64,25 +54,30 @@ const TodoList = () => {
       {/* Todo list */}
       <StyledList>
         {todos.map((item) => {
-          if (item.category === currentFilter || currentFilter === "all")
+          if (item.category === currentFilter || currentFilter === "all") {
             return <TodoItem key={item.id} item={item} />;
+          }
+          return null;
         })}
       </StyledList>
       {/* Delete buttons */}
       <StyledWrapper>
-        {[
-          { title: "Delete Done Tasks", delete: "done" },
-          { title: "Delete All Tasks", delete: "all" },
-        ].map(({ title, delete: deleteType }) => (
-          <MainButton
-            key={title}
-            title={title}
-            width={230}
-            bgColor={"#d32f2f"}
-            // callback={() => onRemove(deleteType)}
-            display={displayDeleteButtons}
-          />
-        ))}
+        <MainButton
+          title={"Delete Done Tasks"}
+          width={230}
+          bgColor={"#27782a"}
+          display={displayDeleteButtons}
+          delete="done"
+          onClick={() => dispatch(removeDoneTasks())}
+        />
+        <MainButton
+          title={"Delete All Tasks"}
+          width={230}
+          bgColor={"#d32f2f"}
+          display={displayDeleteButtons}
+          delete="all"
+          onClick={() => dispatch(removeAllTasks())}
+        />
       </StyledWrapper>
     </div>
   );

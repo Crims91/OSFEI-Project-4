@@ -1,7 +1,7 @@
 import Button from "@mui/material/Button";
 import { darken } from "@mui/material";
 
-const MainButton = ({ title, width, bgColor, onClick, display, variant }) => {
+const MainButton = ({ title, width, bgColor, onClick, display }) => {
   return (
     <Button
       sx={{

@@ -1,31 +1,36 @@
-import { useState } from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
+import modalStyle from "./Modal.styles";
 import MainButton from "../Button/Button";
+import { useState, useEffect } from "react";
 import { StyledTextField } from "../TodoInput/TodoInput.styles";
 import { useDispatch, useSelector } from "react-redux";
 import { editTodo } from "../../store/todoSlice";
 import { toggleModalOpen } from "../../store/modalSlice";
 
-const style = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  width: 600,
-  bgcolor: "background.paper",
-  border: "2px solid #000",
-  boxShadow: 24,
-  p: 4,
-};
-
 export default function BasicModal() {
-  const [inputValue, setInputValue] = useState("");
-
   const dispatch = useDispatch();
   const isModalOpen = useSelector((state) => state.modal.isModalOpen);
   const currentModalId = useSelector((state) => state.modal.currentModalId);
+  const currentTodoText = useSelector((state) => {
+    if (state.todos.todos) {
+      const currentTodo = state.todos.todos.find(
+        (todo) => todo.id === currentModalId
+      );
+      const text = currentTodo?.text || "";
+
+      return text;
+    }
+    return "";
+  });
+  const [inputValue, setInputValue] = useState("");
+
+  useEffect(() => {
+    if (currentTodoText) {
+      setInputValue(currentTodoText);
+    }
+  }, [currentTodoText]);
 
   const onEditInputChange = (e) => {
     setInputValue(e.target.value);
@@ -42,6 +47,8 @@ export default function BasicModal() {
     }
   };
 
+  console.log(inputValue);
+
   return (
     <div>
       <Modal
@@ -50,7 +57,7 @@ export default function BasicModal() {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style}>
+        <Box sx={modalStyle}>
           <Typography id="modal-modal-title" variant="h6" component="h2">
             Edit todo item
           </Typography>
@@ -66,7 +73,7 @@ export default function BasicModal() {
             title="Edit"
             width={180}
             bgColor={"#009688"}
-            callback={handleEdit}
+            onClick={handleEdit}
           />
         </Box>
       </Modal>

@@ -46,7 +46,7 @@ const TodoInput = () => {
           title="new todo"
           width={560}
           bgColor={"#009688"}
-          // callback={addTodoItem}
+          onClick={addTodoItem}
         />
       </StyledBox>
     </form>
