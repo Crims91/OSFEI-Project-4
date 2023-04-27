@@ -5,24 +5,31 @@ import {
   TodoInputHeading,
 } from "./TodoInput.styles";
 import MainButton from "../Button/Button";
+import { useState } from "react";
 import { InputAdornment } from "@mui/material";
-import { useContext } from "react";
-import { AppContext } from "../App/App";
 import { useDispatch } from "react-redux";
+import { v4 } from "uuid";
+import { addTodo } from "../../store/todoSlice";
 
-const TodoInput = ({ onKeyPress }) => {
+const TodoInput = () => {
+  const [inputValue, setInputValue] = useState("");
   const dispatch = useDispatch();
 
-  const { inputValue, onInputChange, addTodoItem } = useContext(AppContext);
+  const addTodoItem = (e) => {
+    e.preventDefault();
+    if (inputValue.length) {
+      dispatch(addTodo({ id: v4(), text: inputValue, category: "todo" }));
+      setInputValue("");
+    }
+  };
 
   return (
-    <div>
+    <form onSubmit={addTodoItem}>
       <StyledBox>
         <TodoInputHeading>Todo Input</TodoInputHeading>
         <StyledTextField
           value={inputValue}
-          onChange={onInputChange}
-          onKeyPress={onKeyPress}
+          onChange={(e) => setInputValue(e.target.value)}
           fullWidth
           autoFocus
           label="New Todo"
@@ -39,10 +46,10 @@ const TodoInput = ({ onKeyPress }) => {
           title="new todo"
           width={560}
           bgColor={"#009688"}
-          callback={addTodoItem}
+          // callback={addTodoItem}
         />
       </StyledBox>
-    </div>
+    </form>
   );
 };
 

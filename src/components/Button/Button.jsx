@@ -1,7 +1,7 @@
 import Button from "@mui/material/Button";
 import { darken } from "@mui/material";
 
-const MainButton = ({ title, width, bgColor, callback, display }) => {
+const MainButton = ({ title, width, bgColor, onClick, display, variant }) => {
   return (
     <Button
       sx={{
@@ -12,7 +12,7 @@ const MainButton = ({ title, width, bgColor, callback, display }) => {
         "&:hover": { backgroundColor: darken(bgColor, 0.2) },
       }}
       variant="contained"
-      onClick={callback}
+      onClick={onClick}
     >
       {title}
     </Button>

@@ -9,20 +9,18 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 
 import { useDispatch } from "react-redux";
-import { removeTodo, toggleTodo } from "../../store/todoSlice";
+import { removeTodo } from "../../store/todoSlice";
 import { setCurrentModalId, toggleModalOpen } from "../../store/modalSlice";
+import { updateTaskCategory } from "../../store/todoSlice";
 
-const TodoItem = ({ id, text, done }) => {
+const TodoItem = ({ item }) => {
+  const { id, text, category } = item;
   const dispatch = useDispatch();
-  const isChecked = done || false;
 
-  // Checks if the todo is done and changes the style
-  const completedStyles = done
-    ? {
-        textDecoration: "line-through",
-        color: "grey",
-      }
-    : {};
+  const completedStyles =
+    category === "done"
+      ? { color: "grey", textDecoration: "line-through" }
+      : {};
 
   return (
     <ListItem
@@ -32,10 +30,10 @@ const TodoItem = ({ id, text, done }) => {
       <ListItemButton>
         <ListItemIcon>
           <Checkbox
-            checked={isChecked}
             label="end"
             sx={{ marginRight: "auto" }}
-            onClick={() => dispatch(toggleTodo(id))}
+            checked={category === "done"}
+            onClick={() => dispatch(updateTaskCategory(id))}
           />
         </ListItemIcon>
         <ListItemText primary={text} sx={completedStyles} />
@@ -51,7 +49,7 @@ const TodoItem = ({ id, text, done }) => {
         </ListItemIcon>
         <ListItemIcon>
           <DeleteIcon
-            onClick={() => dispatch(removeTodo())}
+            onClick={() => dispatch(removeTodo(id))}
             label="end"
             sx={{ marginRight: "auto ", marginLeft: "auto" }}
           />
