@@ -47,8 +47,6 @@ export default function BasicModal() {
     }
   };
 
-  console.log(inputValue);
-
   return (
     <div>
       <Modal
