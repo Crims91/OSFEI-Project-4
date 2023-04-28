@@ -1,6 +1,6 @@
 import MainButton from "../Button/Button";
 import TodoItem from "../TodoItem/TodoItem";
-import { StyledWrapper, TodoListHeading, StyledList } from "./TodoList.styles";
+import { StyledWrapper, StyledList } from "./TodoList.styles";
 import { useDispatch, useSelector } from "react-redux";
 import {
   changeFilter,
@@ -22,13 +22,12 @@ const TodoList = () => {
   const handleChangeFilter = (filter) => {
     dispatch(changeFilter(filter));
   };
-  // Check if there are no todos to display delete buttons
+  // Check if there are no todos to display buttons
   const displayDeleteButtons = !todos.length ? "none" : "";
+  const displayFilterButtons = !todos.length ? "none" : "";
 
   return (
     <div>
-      <TodoListHeading>Todo List</TodoListHeading>
-
       {/* Filter buttons */}
       <StyledWrapper>
         <MainButton
@@ -36,18 +35,21 @@ const TodoList = () => {
           width={180}
           bgColor={"#597e90"}
           onClick={() => handleChangeFilter("all")}
+          display={displayFilterButtons}
         />
         <MainButton
           title={"Done"}
           width={180}
           bgColor={"#4caf50"}
           onClick={() => handleChangeFilter("done")}
+          display={displayFilterButtons}
         />
         <MainButton
           title={"Todo"}
           width={180}
           bgColor={"#4559ca"}
           onClick={() => handleChangeFilter("todo")}
+          display={displayFilterButtons}
         />
       </StyledWrapper>
 

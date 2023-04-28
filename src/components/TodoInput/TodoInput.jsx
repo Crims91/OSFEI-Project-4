@@ -26,7 +26,7 @@ const TodoInput = () => {
   return (
     <form onSubmit={addTodoItem}>
       <StyledBox>
-        <TodoInputHeading>Todo Input</TodoInputHeading>
+        <TodoInputHeading>Todo List</TodoInputHeading>
         <StyledTextField
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
