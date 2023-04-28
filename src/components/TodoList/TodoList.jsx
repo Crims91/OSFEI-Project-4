@@ -14,6 +14,7 @@ const TodoList = () => {
   const todos = useSelector((state) => {
     return state.todos.todos;
   });
+  console.log("🚀 ~ file: TodoList.jsx:19 ~ todos ~ todos:", todos);
 
   const currentFilter = useSelector((state) => {
     return state.todos.activeFilter;
@@ -22,9 +23,10 @@ const TodoList = () => {
   const handleChangeFilter = (filter) => {
     dispatch(changeFilter(filter));
   };
+
   // Check if there are no todos to display buttons
-  const displayDeleteButtons = !todos.length ? "none" : "";
   const displayFilterButtons = !todos.length ? "none" : "";
+  const displayDeleteButtons = !todos.length ? "none" : "";
 
   return (
     <div>
