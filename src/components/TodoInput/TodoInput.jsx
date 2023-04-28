@@ -4,9 +4,9 @@ import {
   ListIcon,
   TodoInputHeading,
 } from "./TodoInput.styles";
+import { InputAdornment } from "@mui/material";
 import MainButton from "../Button/Button";
 import { useState } from "react";
-import { InputAdornment } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { v4 } from "uuid";
 import { addTodo } from "../../store/todoSlice";

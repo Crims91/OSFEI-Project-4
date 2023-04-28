@@ -7,11 +7,9 @@ import {
 } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
-
 import { useDispatch } from "react-redux";
-import { removeTodo } from "../../store/todoSlice";
+import { removeTodo, updateTaskCategory } from "../../store/todoSlice";
 import { setCurrentModalId, toggleModalOpen } from "../../store/modalSlice";
-import { updateTaskCategory } from "../../store/todoSlice";
 
 const TodoItem = ({ item }) => {
   const { id, text, category } = item;
