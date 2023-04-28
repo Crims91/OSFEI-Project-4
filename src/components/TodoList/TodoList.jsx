@@ -14,7 +14,6 @@ const TodoList = () => {
   const todos = useSelector((state) => {
     return state.todos.todos;
   });
-  console.log("🚀 ~ file: TodoList.jsx:19 ~ todos ~ todos:", todos);
 
   const currentFilter = useSelector((state) => {
     return state.todos.activeFilter;
